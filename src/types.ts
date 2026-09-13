@@ -10,7 +10,7 @@ export interface Student {
 }
 
 export interface Event {
-  id: number
+  id: number | null
   category: string
   title: string
   description: string

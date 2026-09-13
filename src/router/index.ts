@@ -6,6 +6,7 @@ import EventLayoutView from '@/views/event/LayoutView.vue'
 import EventDetailView from '@/views/event/DetailView.vue'
 import EventRegisterView from '@/views/event/RegisterView.vue'
 import EventEditView from '@/views/event/EditView.vue'
+import AddEventView from '@/views/event/EventFormView.vue'
 import NotFoundView from '@/views/NotFoundView.vue'
 import NetworkErrorView from '@/views/NetworkErrorView.vue'
 import nProgress from 'nprogress'
@@ -75,6 +76,11 @@ const router = createRouter({
       path: '/about',
       name: 'about',
       component: AboutView,
+    },
+    {
+      path: '/add-event',
+      name: 'add-event',
+      component: AddEventView,
     },
     {
       path: '/404/:resource',
