@@ -9,7 +9,7 @@ defineProps<{
   <div class="event-class">
     <div class="event-card">
       <p class="meta-text">{{ event.category }}</p>
-      <p class="meta-text">{{ event.organizer }}</p>
+      <p class="meta-text">{{ event.organizer.name }}</p>
     </div>
   </div>
 </template>
