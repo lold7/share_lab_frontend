@@ -33,3 +33,17 @@ export interface MessageState {
 export interface EventState {
   event: Event | null
 }
+
+export interface Bid {
+  id: number
+  amount: number
+  datetime: string
+}
+
+export interface AuctionItem {
+  id: number
+  description: string
+  type: string
+  bids: Bid[]
+  successfulBid: Bid | null
+}

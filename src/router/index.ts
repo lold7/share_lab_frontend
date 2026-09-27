@@ -10,6 +10,7 @@ import AddEventView from '@/views/event/EventFormView.vue'
 import AddOrganizerView from '@/views/organizer/OrganizerFormView.vue'
 import NotFoundView from '@/views/NotFoundView.vue'
 import NetworkErrorView from '@/views/NetworkErrorView.vue'
+import AuctionItemListView from '@/views/AuctionItemListView.vue'
 import nProgress from 'nprogress'
 import EventService from '@/services/EventService'
 import { useEventStore } from '@/stores/event'
@@ -67,6 +68,15 @@ const router = createRouter({
           component: EventEditView,
         },
       ],
+    },
+    {
+      path: '/auction-items',
+      name: 'auction-item-list-view',
+      component: AuctionItemListView,
+      props: (route) => ({
+        page: parseInt(route.query.page?.toString() || '1'),
+        size: parseInt(route.query.size?.toString() || '3'),
+      }),
     },
     {
       path: '/students',
