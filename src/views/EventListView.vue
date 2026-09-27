@@ -28,14 +28,7 @@ const hasNextPage = computed(() => {
 
 onMounted(() => {
   watchEffect(() => {
-    EventService.getEvents(size.value, page.value)
-      .then((response) => {
-        events.value = response.data
-        totalEvents.value = Number(response.headers['x-total-count'])
-      })
-      .catch((error) => {
-        console.error('There was an error!', error)
-      })
+    updateKeyword()
   })
 })
 
@@ -75,7 +68,7 @@ function updateKeyword() {
     <div class="size-links">
       Page size:
       <RouterLink
-        v-for="s in [2, 3, 4, 6]"
+        v-for="s in [1, 2, 3, 4, 6]"
         :key="s"
         :to="{ name: 'event-list-view', query: { page: 1, size: s } }"
         >{{ s }}</RouterLink
