@@ -3,7 +3,10 @@ import EventCard from '@/components/EventCard.vue'
 import type { Event } from '@/types'
 import { ref, onMounted, computed, watchEffect } from 'vue'
 import EventService from '@/services/EventService'
+import BaseInput from '@/components/BaseInput.vue'
+import { useRouter } from 'vue-router'
 
+const router = useRouter()
 const events = ref<Event[] | null>(null)
 const totalEvents = ref(0)
 const props = defineProps({
@@ -35,11 +38,40 @@ onMounted(() => {
       })
   })
 })
+
+const keyword = ref('')
+function updateKeyword() {
+  let queryFunction
+  if (keyword.value === '') {
+    queryFunction = EventService.getEvents(size.value, page.value)
+  } else {
+    queryFunction = EventService.getEventsByKeyword(keyword.value, size.value, page.value)
+  }
+  queryFunction
+    .then((response) => {
+      events.value = response.data
+      console.log('events', events.value)
+      totalEvents.value = Number(response.headers['x-total-count'])
+      console.log('totalEvent', totalEvents.value)
+    })
+    .catch(() => {
+      router.push({ name: 'network-error-view' })
+    })
+}
 </script>
 
 <template>
   <h1>Events For Good</h1>
   <div class="flex flex-col items-center">
+    <div class="w-64">
+      <BaseInput
+        v-model="keyword"
+        type="text"
+        label="Search..."
+        class="w-full"
+        @input="updateKeyword"
+      />
+    </div>
     <div class="size-links">
       Page size:
       <RouterLink
