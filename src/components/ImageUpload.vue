@@ -10,6 +10,10 @@ interface UploadMedia {
 const modelValue = defineModel<string[]>({
   default: () => [],
 })
+// optional limit on the number of images (e.g. 1 for the organizer)
+defineProps<{
+  max?: number
+}>()
 const convertStringToMedia = (str: string[]): UploadMedia[] => {
   return str.map((element) => {
     return {
@@ -31,5 +35,5 @@ const onChanged = (files: UploadMedia[]): void => {
 }
 </script>
 <template>
-  <Uploader :server="uploadUrl" @change="onChanged" :media="media"></Uploader>
+  <Uploader :server="uploadUrl" @change="onChanged" :media="media" :max="max"></Uploader>
 </template>

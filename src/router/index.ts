@@ -8,6 +8,7 @@ import EventRegisterView from '@/views/event/RegisterView.vue'
 import EventEditView from '@/views/event/EditView.vue'
 import AddEventView from '@/views/event/EventFormView.vue'
 import AddOrganizerView from '@/views/organizer/OrganizerFormView.vue'
+import OrganizerDetailView from '@/views/organizer/OrganizerDetailView.vue'
 import NotFoundView from '@/views/NotFoundView.vue'
 import NetworkErrorView from '@/views/NetworkErrorView.vue'
 import AuctionItemListView from '@/views/AuctionItemListView.vue'
@@ -97,6 +98,12 @@ const router = createRouter({
       path: '/add-organizer',
       name: 'add-organizer',
       component: AddOrganizerView,
+    },
+    {
+      path: '/organizer/:id',
+      name: 'organizer-detail-view',
+      component: OrganizerDetailView,
+      props: (route) => ({ id: parseInt(route.params.id as string) }),
     },
     {
       path: '/404/:resource',

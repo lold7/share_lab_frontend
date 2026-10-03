@@ -25,6 +25,18 @@ export interface Event {
 export interface Organizer {
   id: number
   name: string
+  image?: string
+  ownEvents?: OrganizerOwnEvent[]
+}
+
+export interface OrganizerOwnEvent {
+  id: number
+  category: string
+  title: string
+  description: string
+  location: string
+  date: string
+  time: string
 }
 
 export interface MessageState {

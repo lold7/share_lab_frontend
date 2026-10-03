@@ -4,6 +4,7 @@ import { ref } from 'vue'
 import OrganizerService from '@/services/OrganizerService'
 import { useRouter } from 'vue-router'
 import { useMessageStore } from '@/stores/message'
+import ImageUpload from '@/components/ImageUpload.vue'
 
 const organizer = ref<Organizer>({
   id: 0,
@@ -11,10 +12,15 @@ const organizer = ref<Organizer>({
 })
 
 const saved = ref<Organizer | null>(null)
+// the uploader works with a list, but an organizer keeps only 1 image
+const images = ref<string[]>([])
+// changing the key remounts the uploader so it is cleared after saving
+const uploaderKey = ref(0)
 
 const router = useRouter()
 const store = useMessageStore()
 function saveOrganizer() {
+  organizer.value.image = images.value[0]
   OrganizerService.saveOrganizer(organizer.value)
     .then((response) => {
       saved.value = response.data
@@ -23,6 +29,8 @@ function saveOrganizer() {
         store.resetMessage()
       }, 3000)
       organizer.value = { id: 0, name: '' }
+      images.value = []
+      uploaderKey.value++
     })
     .catch(() => {
       router.push({ name: 'network-error-view' })
@@ -42,6 +50,8 @@ function saveOrganizer() {
         placeholder="Name"
         class="h-13 w-1/4 px-2.5 text-xl border border-gray-400 focus:border-emerald-500 focus:outline-none mb-6"
       />
+      <h3>The image of the Organizer</h3>
+      <ImageUpload :key="uploaderKey" v-model="images" :max="1" />
       <button
         class="flex w-fit mx-auto items-center justify-center h-13 px-10 rounded-md font-semibold whitespace-nowrap border border-gray-400 focus:border-emerald-500 transition-all duration-200 ease-linear hover:scale-105 hover:border-emerald-500 hover:shadow-lg active:scale-100 focus:outline-none"
         type="submit"
@@ -53,6 +63,12 @@ function saveOrganizer() {
     <div v-if="saved">
       <h3>Saved to the database</h3>
       <pre>{{ saved }}</pre>
+      <RouterLink
+        :to="{ name: 'organizer-detail-view', params: { id: saved.id } }"
+        class="font-bold text-emerald-600 underline"
+      >
+        See the organizer detail
+      </RouterLink>
     </div>
   </div>
 </template>
