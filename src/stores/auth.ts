@@ -22,12 +22,38 @@ export const useAuthStore = defineStore('auth', {
     isAdmin(): boolean {
       return this.user?.roles?.includes('ROLE_ADMIN') || false
     },
+    authorizationHeader(): string {
+      return `Bearer ${this.token}`
+    },
   },
   actions: {
     login(email: string, password: string) {
       return apiClient
         .post('/api/v1/auth/authenticate', {
           username: email,
+          password: password,
+        })
+        .then((response) => {
+          this.token = response.data.access_token
+          this.user = response.data.user
+          localStorage.setItem('access_token', this.token as string)
+          localStorage.setItem('user', JSON.stringify(this.user))
+          return response
+        })
+    },
+    register(
+      username: string,
+      firstname: string,
+      lastname: string,
+      email: string,
+      password: string,
+    ) {
+      return apiClient
+        .post('/api/v1/auth/register', {
+          username: username,
+          firstname: firstname,
+          lastname: lastname,
+          email: email,
           password: password,
         })
         .then((response) => {
