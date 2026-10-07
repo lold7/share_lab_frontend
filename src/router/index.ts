@@ -12,6 +12,7 @@ import OrganizerDetailView from '@/views/organizer/OrganizerDetailView.vue'
 import NotFoundView from '@/views/NotFoundView.vue'
 import NetworkErrorView from '@/views/NetworkErrorView.vue'
 import AuctionItemListView from '@/views/AuctionItemListView.vue'
+import LoginView from '@/views/LoginView.vue'
 import nProgress from 'nprogress'
 import EventService from '@/services/EventService'
 import { useEventStore } from '@/stores/event'
@@ -27,6 +28,11 @@ const router = createRouter({
         page: parseInt(route.query.page?.toString() || '1'),
         size: parseInt(route.query.size?.toString() || '3'),
       }),
+    },
+    {
+      path: '/login',
+      name: 'login-view',
+      component: LoginView,
     },
     {
       path: '/event/:id',
