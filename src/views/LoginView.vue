@@ -3,9 +3,11 @@ import InputText from '@/components/InputText.vue'
 import * as yup from 'yup'
 import { useField, useForm } from 'vee-validate'
 import { useAuthStore } from '@/stores/auth'
+import { useMessageStore } from '@/stores/message'
 import { useRouter } from 'vue-router'
 const router = useRouter()
 const authStore = useAuthStore()
+const messageStore = useMessageStore()
 const validationSchema = yup.object({
   email: yup.string().required('The email is required'),
   password: yup.string().required('The password is required'),
@@ -25,8 +27,11 @@ const onSubmit = handleSubmit((values) => {
     .then(() => {
       router.push({ name: 'event-list-view' })
     })
-    .catch((err) => {
-      console.log('error', err)
+    .catch(() => {
+      messageStore.updateMessage('could not login')
+      setTimeout(() => {
+        messageStore.resetMessage()
+      }, 3000)
     })
 })
 </script>
