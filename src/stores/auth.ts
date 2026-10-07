@@ -19,6 +19,9 @@ export const useAuthStore = defineStore('auth', {
     currentUserName(): string {
       return this.user?.name || ''
     },
+    isAdmin(): boolean {
+      return this.user?.roles?.includes('ROLE_ADMIN') || false
+    },
   },
   actions: {
     login(email: string, password: string) {

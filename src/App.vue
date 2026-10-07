@@ -65,8 +65,12 @@ function logout() {
           </nav>
           <RouterLink :to="{ name: 'event-list-view' }">Event</RouterLink> |
           <RouterLink :to="{ name: 'student-list-view' }">Student</RouterLink> |
-          <RouterLink :to="{ name: 'about' }">About</RouterLink> |
-          <RouterLink :to="{ name: 'add-event' }">New Event</RouterLink> |
+          <RouterLink :to="{ name: 'about' }">About</RouterLink>
+          <span v-if="authStore.isAdmin">
+            |
+            <RouterLink :to="{ name: 'add-event' }">New Event</RouterLink>
+          </span>
+          |
           <RouterLink :to="{ name: 'add-organizer' }">New Organizer</RouterLink> |
           <RouterLink :to="{ name: 'auction-item-list-view' }">Auction</RouterLink>
         </nav>

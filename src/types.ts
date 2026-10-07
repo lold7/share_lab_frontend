@@ -27,6 +27,7 @@ export interface Organizer {
   name: string
   image?: string
   ownEvents?: OrganizerOwnEvent[]
+  roles?: string[]
 }
 
 export interface OrganizerOwnEvent {
